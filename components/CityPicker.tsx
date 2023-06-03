@@ -45,17 +45,53 @@ const CityPicker = () => {
 		setSelectedCity(null);
 	};
 
+	const handleSelectedCity = (option: cityOption) => {
+		setSelectedCity(option);
+		router.push(
+			`/location/${option?.value.latitude}/${option?.value.longitude}`
+		);
+	};
+
 	return (
-		<div>
-			<div>
-				<label htmlFor="country">Country</label>
+		<div className="space-y-4">
+			<div className="space-y-2">
+				<div className="flex items-center space-x-2 text-white/80">
+					<GlobeIcon className="h-5 w-5 text-white" />
+					<label htmlFor="country">Country</label>
+				</div>
+				<Select
+					className="text-black"
+					options={options}
+					value={selectedCountry}
+					onChange={handleSelectedCountry}
+				/>
 			</div>
-			<Select
-				className="text-black"
-				options={options}
-				value={selectedCountry}
-				onChange={handleSelectedCountry}
-			/>
+
+			{selectedCountry && (
+				<div className="space-y-2">
+					<div className="flex items-center space-x-2 text-white/80">
+						<GlobeIcon className="h-5 w-5 text-white" />
+						<label htmlFor="country">City</label>
+					</div>
+					<Select
+						className="text-black"
+						options={City.getCitiesOfCountry(
+							selectedCountry.value.isoCode
+						)?.map((city) => ({
+							value: {
+								latitude: city.latitude!,
+								longitude: city.longitude!,
+								countryCode: city.countryCode,
+								name: city.name,
+								stateCode: city.stateCode,
+							},
+							label: city.name,
+						}))}
+						value={selectedCity}
+						onChange={handleSelectedCity}
+					/>
+				</div>
+			)}
 		</div>
 	);
 };
