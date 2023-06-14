@@ -31,7 +31,7 @@ async function WeatherPage({ params: { city, lat, long } }: Props) {
 		},
 	});
 	const results: Root = data.myQuery;
-	const dataToSend = cleanData(results, city);
+	// const dataToSend = cleanData(results, city);
 	// const res = await fetch(`${getBasePath()}/api/getWeatherSummary`, {
 	// 	method: "POST",
 	// 	headers: {
@@ -43,6 +43,7 @@ async function WeatherPage({ params: { city, lat, long } }: Props) {
 
 	// fetching from response.json
 	const GPTdata = res;
+
 	const { content } = GPTdata;
 
 	return (
